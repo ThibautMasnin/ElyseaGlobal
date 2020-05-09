@@ -3,17 +3,17 @@ package ElyseaGlobal.fr.noctambul.elyseaplugin;
 import java.util.Arrays;
 import java.util.UUID;
 
-import bukkit.Material;
-import bukkit.attribute.Attribute;
-import bukkit.attribute.AttributeModifier;
-import bukkit.event.Listener;
-import bukkit.inventory.EquipmentSlot;
-import bukkit.inventory.ItemStack;
-import bukkit.inventory.RecipeChoice;
-import bukkit.inventory.ShapedRecipe;
-import bukkit.inventory.ShapelessRecipe;
-import bukkit.inventory.meta.ItemMeta;
-import bukkit.plugin.java.JavaPlugin;
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ElyseaPlugin extends JavaPlugin  implements Listener {
 
