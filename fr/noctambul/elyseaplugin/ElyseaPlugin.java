@@ -39,7 +39,9 @@ public class ElyseaPlugin extends JavaPlugin  implements Listener {
 		System.out.println("§4Le plugin s'arrete");
 	}
 	
-	
+
+// AJOUT DES CRAFTS ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@SuppressWarnings("deprecation")
 	public void ajouterCrafts() {
 		/*
 			ItemStack armor = new ItemStack(Material.NETHERITE_CHESTPLATE, 1);
