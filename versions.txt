@@ -1,0 +1,7 @@
+1.0 - 09/05/2020 :
+Initialisation du plugin
+Ajout des crafts : armures pour chevaux, ficelles, laisse, selle, soufle du dragon, etiquette, trident, cloche, echafaudage, colorant marron, armure en maille, couronnes, lingots de fer et pepites de fer
+Ajout des effets négatifs au respawn
+Ajout des loots d'os sur certains mobs
+
+----------------------------------------------------------------------------------------------------------------------------------------------
