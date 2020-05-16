@@ -15,10 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -95,7 +95,7 @@ public class PluginListener implements Listener {
 		if(rawMsg.substring(0,1).equals("*")) {
 			for(Player p : e.getRecipients()) {
 				if(p.getWorld()==e.getPlayer().getWorld() && p.getLocation().distance(playerLocation) <= 12) {
-					p.sendMessage("§8[§2RP§8]§f"+e.getPlayer().getDisplayName() + "§8 dit §f" + rawMsg.substring(1));
+					p.sendMessage("Â§8[Â§2RPÂ§8]Â§f"+e.getPlayer().getDisplayName() + "Â§8 dit Â§f" + rawMsg.substring(1));
 					seul++;
 				}
 			}
@@ -104,7 +104,7 @@ public class PluginListener implements Listener {
 		else if(rawMsg.substring(0,1).equals("-")) {
 			for(Player p : e.getRecipients()) {
 				if(p.getWorld()==e.getPlayer().getWorld() && p.getLocation().distance(playerLocation) <= 5) {
-					p.sendMessage("§8[§2RP§8]§f"+e.getPlayer().getDisplayName() + "§8 murmure §f" + rawMsg.substring(1));
+					p.sendMessage("Â§8[Â§2RPÂ§8]Â§f"+e.getPlayer().getDisplayName() + "Â§8 murmure Â§f" + rawMsg.substring(1));
 					seul++;
 				}
 			}
@@ -113,7 +113,7 @@ public class PluginListener implements Listener {
 		else if(rawMsg.substring(0,1).equals("+")) {
 			for(Player p : e.getRecipients()) {
 				if(p.getWorld()==e.getPlayer().getWorld() && p.getLocation().distance(playerLocation) <= 25) {
-					p.sendMessage("§8[§2RP§8]§f"+e.getPlayer().getDisplayName() + "§8 crie §f" + rawMsg.substring(1));
+					p.sendMessage("Â§8[Â§2RPÂ§8]Â§f"+e.getPlayer().getDisplayName() + "Â§8 crie Â§f" + rawMsg.substring(1));
 					seul++;
 				}
 			}
@@ -121,12 +121,12 @@ public class PluginListener implements Listener {
 		//global HRP
 		else {
 			for(Player p : e.getRecipients()) {
-				p.sendMessage("§8[§3HRP§8]§f"+e.getPlayer().getDisplayName() +"§8 : §f"+ rawMsg);
+				p.sendMessage("Â§8[Â§3HRPÂ§8]Â§f"+e.getPlayer().getDisplayName() +"Â§8 : Â§f"+ rawMsg);
 				seul++;
 			}	
 		}
 		if(seul<=1) {
-			e.getPlayer().sendMessage("§f[§6ELYSEA§f] §cPersonne ne t'entend !");
+			e.getPlayer().sendMessage("Â§f[Â§6ELYSEAÂ§f] Â§cPersonne ne t'entend !");
 		}
 	}
 	
@@ -135,6 +135,30 @@ public class PluginListener implements Listener {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // VITESSE AVEC ARMURE ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	@EventHandler
+	public void onMoveWithArmor(PlayerMoveEvent e) {
+		Player player = e.getPlayer();
+		ItemStack helmet = player.getInventory().getHelmet();
+		ItemStack chestPlate = player.getInventory().getChestplate();
+		ItemStack leggings = player.getInventory().getLeggings();
+		ItemStack boots = player.getInventory().getBoots();
+		float weight = 0f;
+		if (helmet != null && (helmet.getType() == Material.DIAMOND_HELMET || helmet.getType()  == Material.IRON_HELMET || helmet.getType() == Material.GOLDEN_HELMET)) {
+			weight += 0.01f;
+		}if (chestPlate != null && (chestPlate.getType().equals(Material.GOLDEN_CHESTPLATE) || chestPlate.getType() == Material.DIAMOND_CHESTPLATE || chestPlate.getType() == Material.IRON_CHESTPLATE)) {
+			weight += 0.01f;
+		}
+		if (leggings != null && ( leggings.getType() == Material.GOLDEN_LEGGINGS || leggings.getType() == Material.DIAMOND_LEGGINGS || leggings.getType() == Material.IRON_LEGGINGS)) {
+			weight += 0.01f;
+		}
+		if (boots != null && ( boots.getType().equals(Material.GOLDEN_BOOTS) || boots.getType().equals(Material.DIAMOND_BOOTS) ||boots.getType().equals(Material.IRON_BOOTS))) {
+			weight += 0.01f;
+		}
+		player.setWalkSpeed(0.2f-weight);
+	}
+	/*
 	@EventHandler
 	 void onSetArmor1(InventoryClickEvent event) {
 		
@@ -285,7 +309,7 @@ public class PluginListener implements Listener {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,Integer.MAX_VALUE,0));
 			}		
 		}
-
+*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MENU VISITEUR /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -297,8 +321,8 @@ public class PluginListener implements Listener {
 			p.getInventory().clear(0);
 			ItemStack star = new ItemStack(Material.NETHER_STAR);
 			ItemMeta starM = star.getItemMeta();
-			starM.setDisplayName("§9Menu visiteur");
-			starM.setLore(Arrays.asList("§6Cliquez sur les bannières", "§6pour visiter les factions."));
+			starM.setDisplayName("Â§9Menu visiteur");
+			starM.setLore(Arrays.asList("Â§6Cliquez sur les banniÃ¨res", "Â§6pour visiter les factions."));
 			star.setItemMeta(starM);
 			p.getInventory().setItem(0, star);
 		//}
@@ -309,37 +333,37 @@ public class PluginListener implements Listener {
 		Player p = event.getPlayer();
 		ItemStack it = event.getItem();
 		if (it==null) return;
-		if(it.getType()==Material.NETHER_STAR && it.hasItemMeta() && it.getItemMeta().getDisplayName().equals("§9Menu visiteur")) {
-			Inventory inv = Bukkit.createInventory(null, 9, "§0Menu visiteur");
+		if(it.getType()==Material.NETHER_STAR && it.hasItemMeta() && it.getItemMeta().getDisplayName().equals("Â§9Menu visiteur")) {
+			Inventory inv = Bukkit.createInventory(null, 9, "Â§0Menu visiteur");
 			
 			//Map Build
 			ItemStack build = new ItemStack(Material.IRON_PICKAXE);
 			ItemMeta buildM = build.getItemMeta();
-			buildM.setDisplayName("§6Build");
+			buildM.setDisplayName("Â§6Build");
 			build.setItemMeta(buildM);
 			inv.setItem(0, build);
-			//Bannière romaine
+			//BanniÃ¨re romaine
 			ItemStack rome = new ItemStack(Material.RED_BANNER);
 			ItemMeta romeM = rome.getItemMeta();
-			romeM.setDisplayName("§4Rome");
+			romeM.setDisplayName("Â§4Rome");
 			rome.setItemMeta(romeM);
 			inv.setItem(3, rome);
-			//Bannière celte (TheNordiX)
+			//BanniÃ¨re celte (TheNordiX)
 			ItemStack albroga = new ItemStack(Material.LIGHT_GRAY_BANNER);
 			ItemMeta albrogaM = albroga.getItemMeta();
-			albrogaM.setDisplayName("§7Celtes (Albroga)");
+			albrogaM.setDisplayName("Â§7Celtes (Albroga)");
 			albroga.setItemMeta(albrogaM);
 			inv.setItem(5, albroga);
-			//Bannière celte (Enarrion)
+			//BanniÃ¨re celte (Enarrion)
 			ItemStack hafeld = new ItemStack(Material.CYAN_BANNER);
 			ItemMeta hafeldM = hafeld.getItemMeta();
-			hafeldM.setDisplayName("§3Celtes (Hafeld)");
+			hafeldM.setDisplayName("Â§3Celtes (Hafeld)");
 			hafeld.setItemMeta(hafeldM);
 			inv.setItem(6, hafeld);
-			//Bannière chinoise
+			//BanniÃ¨re chinoise
 			ItemStack chine = new ItemStack(Material.LIME_BANNER);
 			ItemMeta chineM = chine.getItemMeta();
-			chineM.setDisplayName("§aChine");
+			chineM.setDisplayName("Â§aChine");
 			chine.setItemMeta(chineM);
 			inv.setItem(8, chine);
 			
@@ -352,69 +376,69 @@ public class PluginListener implements Listener {
 		Player p = (Player)event.getWhoClicked();
 		ItemStack item = event.getCurrentItem();
 		if (item==null) return;
-		if(event.getView().getTitle().equals("§0Menu visiteur")) {			
-			if(item.getType()==Material.IRON_PICKAXE && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§6Build")) {
+		if(event.getView().getTitle().equals("Â§0Menu visiteur")) {			
+			if(item.getType()==Material.IRON_PICKAXE && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§6Build")) {
 				p.closeInventory();
-				Location loc = new Location(Bukkit.getWorld("Build"), 35, 4, 67);
+				Location loc = new Location(Bukkit.getWorld("Build"), 35, 5, 67);
 				p.teleport(loc);
 			}	
-			else if(item.getType()==Material.RED_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§4Rome")) {
+			else if(item.getType()==Material.RED_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§4Rome")) {
 				p.closeInventory();
 				Location loc = new Location(Bukkit.getWorld("Server"), -1987, 65, -1805);
 				p.teleport(loc);
 			}	
-			else if(item.getType()==Material.LIGHT_GRAY_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§7Celtes (Albroga)")) {
+			else if(item.getType()==Material.LIGHT_GRAY_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§7Celtes (Albroga)")) {
 				p.closeInventory();
 				Location loc = new Location(Bukkit.getWorld("Server"), -7492, 66, -5733);
 				p.teleport(loc);
 			}	
-			else if(item.getType()==Material.CYAN_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§3Celtes (Hafeld)")) {
+			else if(item.getType()==Material.CYAN_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§3Celtes (Hafeld)")) {
 				p.closeInventory();
-				Location loc = new Location(Bukkit.getWorld("Server"), 660, 79, -5328);
+				Location loc = new Location(Bukkit.getWorld("Server"), 642, 80, -5352);
 				p.teleport(loc);
 			}	
-			else if(item.getType()==Material.LIME_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§aChine")) {
+			else if(item.getType()==Material.LIME_BANNER && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§aChine")) {
 				p.closeInventory();
 				Location loc = new Location(Bukkit.getWorld("Server"), 8000, 84, -5000);
 				p.teleport(loc);
 			}	
-			else if(item.getType()==Material.NETHER_STAR && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§9Menu visiteur")) {
+			else if(item.getType()==Material.NETHER_STAR && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§9Menu visiteur")) {
 				event.setCancelled(true);
 			}
 		}
 		else {
-			if(item.getType()==Material.NETHER_STAR && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("§9Menu visiteur")) {
+			if(item.getType()==Material.NETHER_STAR && item.hasItemMeta() && item.getItemMeta().getDisplayName().equals("Â§9Menu visiteur")) {
 				p.closeInventory();
-				Inventory inv = Bukkit.createInventory(null, 9, "§0Menu visiteur");
+				Inventory inv = Bukkit.createInventory(null, 9, "Â§0Menu visiteur");
 				
 				//Map Build
 				ItemStack build = new ItemStack(Material.IRON_PICKAXE);
 				ItemMeta buildM = build.getItemMeta();
-				buildM.setDisplayName("§6Build");
+				buildM.setDisplayName("Â§6Build");
 				build.setItemMeta(buildM);
 				inv.setItem(0, build);
-				//Bannière romaine
+				//BanniÃ¨re romaine
 				ItemStack rome = new ItemStack(Material.RED_BANNER);
 				ItemMeta romeM = rome.getItemMeta();
-				romeM.setDisplayName("§4Rome");
+				romeM.setDisplayName("Â§4Rome");
 				rome.setItemMeta(romeM);
 				inv.setItem(3, rome);
-				//Bannière celte (TheNordiX)
+				//BanniÃ¨re celte (TheNordiX)
 				ItemStack albroga = new ItemStack(Material.LIGHT_GRAY_BANNER);
 				ItemMeta albrogaM = albroga.getItemMeta();
-				albrogaM.setDisplayName("§7Celtes (Albroga)");
+				albrogaM.setDisplayName("Â§7Celtes (Albroga)");
 				albroga.setItemMeta(albrogaM);
 				inv.setItem(5, albroga);
-				//Bannière celte (Enarrion)
+				//BanniÃ¨re celte (Enarrion)
 				ItemStack hafeld = new ItemStack(Material.CYAN_BANNER);
 				ItemMeta hafeldM = hafeld.getItemMeta();
-				hafeldM.setDisplayName("§3Celtes (Hafeld)");
+				hafeldM.setDisplayName("Â§3Celtes (Hafeld)");
 				hafeld.setItemMeta(hafeldM);
 				inv.setItem(6, hafeld);
-				//Bannière chinoise
+				//BanniÃ¨re chinoise
 				ItemStack chine = new ItemStack(Material.LIME_BANNER);
 				ItemMeta chineM = chine.getItemMeta();
-				chineM.setDisplayName("§aChine");
+				chineM.setDisplayName("Â§aChine");
 				chine.setItemMeta(chineM);
 				inv.setItem(8, chine);
 				
